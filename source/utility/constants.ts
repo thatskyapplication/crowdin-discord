@@ -13,3 +13,11 @@ export const CrowdinLanguageToLanguage = {
 	Thai: "ไทย",
 	Vietnamese: "Tiếng Việt",
 } as const satisfies Readonly<Record<string, string>>;
+
+export const CrowdinEventToString = {
+	"suggestion.added": "Suggestion added",
+	"suggestion.updated": "Suggestion updated",
+	"suggestion.deleted": "Suggestion deleted",
+	"suggestion.approved": "Suggestion approved",
+	"suggestion.disapproved": "Suggestion disapproved",
+} as const satisfies Readonly<Record<string, string>>;

@@ -34,6 +34,11 @@ interface CrowdinTranslation {
 }
 
 export interface CrowdinSuggestionAdded {
-	event: "suggestion.added";
+	event:
+		| "suggestion.added"
+		| "suggestion.updated"
+		| "suggestion.deleted"
+		| "suggestion.approved"
+		| "suggestion.disapproved";
 	translation: CrowdinTranslation;
 }

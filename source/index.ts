@@ -1,7 +1,7 @@
 import { API, ComponentType, MessageFlags, SeparatorSpacingSize } from "@discordjs/core/http-only";
 import { REST } from "@discordjs/rest";
 import type { Events } from "./events/index.js";
-import { CrowdinLanguageToLanguage } from "./utility/constants.js";
+import { CrowdinEventToString, CrowdinLanguageToLanguage } from "./utility/constants.js";
 
 interface Env {
 	CROWDIN_TOKEN: string;
@@ -31,7 +31,7 @@ export default {
 					components: [
 						{
 							type: ComponentType.TextDisplay,
-							content: `[Suggestion added](${data.translation.string.url}) (\`${data.translation.string.key}\`)`,
+							content: `[${CrowdinEventToString[data.event]}](${data.translation.string.url}) (\`${data.translation.string.key}\`)`,
 						},
 						{
 							type: ComponentType.TextDisplay,
