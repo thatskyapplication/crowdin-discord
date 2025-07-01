@@ -23,6 +23,7 @@ export default {
 		const data = (await request.json()) as Events;
 
 		await new API(new REST()).webhooks.execute(env.WEBHOOK_ID, env.WEBHOOK_TOKEN, {
+			allowed_mentions: { parse: [] },
 			components: [
 				{
 					type: ComponentType.Container,
