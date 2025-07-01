@@ -1,0 +1,9 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "crowdin"
+main = "source/index.ts"
+compatibility_date = "2025-01-07"
+workers_dev = false
+routes = [{ pattern = "crowdin-webhook.thatskyapplication.com", custom_domain = true }]
+
+[observability]
+enabled = true
