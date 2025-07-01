@@ -29,7 +29,15 @@ export default {
 					components: [
 						{
 							type: ComponentType.TextDisplay,
-							content: `Type: [\`${data.event}\`](${data.translation.string.url})\n>>> ${data.translation.string.text}`,
+							content: `[Suggestion added](${data.translation.string.url}) (\`${data.translation.string.key}\`)`,
+						},
+						{
+							type: ComponentType.TextDisplay,
+							content: `Original:\n>>> ${data.translation.text}`,
+						},
+						{
+							type: ComponentType.TextDisplay,
+							content: `Suggested:\n>>> ${data.translation.string.text}`,
 						},
 						{
 							type: ComponentType.Separator,
@@ -38,7 +46,7 @@ export default {
 						},
 						{
 							type: ComponentType.TextDisplay,
-							content: `-# ${data.translation.targetLanguage.name} | ${data.translation.string.key} | ${data.translation.user.username}`,
+							content: `-# ${data.translation.targetLanguage.name} | ${data.translation.user.username} | <t:${Math.floor(Date.parse(data.translation.createdAt) / 1000)}:R>`,
 						},
 					],
 				},
