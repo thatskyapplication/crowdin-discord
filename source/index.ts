@@ -35,11 +35,11 @@ export default {
 						},
 						{
 							type: ComponentType.TextDisplay,
-							content: `Original:\n>>> ${data.translation.text}`,
+							content: `Original:\n>>> ${data.translation.string.text}`,
 						},
 						{
 							type: ComponentType.TextDisplay,
-							content: `Suggested:\n>>> ${data.translation.string.text}`,
+							content: `Suggested:\n>>> ${data.translation.text}`,
 						},
 						{
 							type: ComponentType.Separator,
