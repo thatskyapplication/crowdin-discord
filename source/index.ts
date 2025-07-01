@@ -1,6 +1,7 @@
 import { API, ComponentType, MessageFlags, SeparatorSpacingSize } from "@discordjs/core/http-only";
 import { REST } from "@discordjs/rest";
 import type { Events } from "./events/index.js";
+import { CrowdinLanguageToLanguage } from "./utility/constants.js";
 
 interface Env {
 	CROWDIN_TOKEN: string;
@@ -47,7 +48,7 @@ export default {
 						},
 						{
 							type: ComponentType.TextDisplay,
-							content: `-# ${data.translation.targetLanguage.name} | ${data.translation.user.username} | <t:${Math.floor(Date.parse(data.translation.createdAt) / 1000)}:R>`,
+							content: `-# ${CrowdinLanguageToLanguage[data.translation.targetLanguage.name as keyof typeof CrowdinLanguageToLanguage]} | ${data.translation.user.username} | <t:${Math.floor(Date.parse(data.translation.createdAt) / 1000)}:R>`,
 						},
 					],
 				},

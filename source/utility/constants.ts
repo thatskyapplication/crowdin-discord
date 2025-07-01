@@ -1,0 +1,15 @@
+export const CrowdinLanguageToLanguage = {
+	"Chinese Simplified": "中文",
+	"Chinese Traditional": "繁體中文",
+	French: "Français",
+	German: "Deutsch",
+	Italian: "Italiano",
+	Japanese: "日本語",
+	Korean: "한국어",
+	"Portuguese, Brazilian": "Português do Brasil",
+	Russian: "Русский",
+	Spanish: "Español",
+	"Spanish, Latin America": "Español, LATAM",
+	Thai: "ไทย",
+	Vietnamese: "Tiếng Việt",
+} as const satisfies Readonly<Record<string, string>>;
