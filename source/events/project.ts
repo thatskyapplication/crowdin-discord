@@ -5,13 +5,7 @@ import {
 	SeparatorSpacingSize,
 } from "@discordjs/core/http-only";
 import { CrowdinEventToString, CrowdinLanguageToLanguage } from "../utility/constants.js";
-import type { CrowdinTargetLanguage } from "./shared.js";
-
-interface CrowdinProject {
-	id: string;
-	lastActivity: string;
-	url: string;
-}
+import type { CrowdinProject, CrowdinTargetLanguage } from "./shared.js";
 
 interface CrowdinProjectTranslatedAndApproved {
 	event: "project.translated" | "project.approved";

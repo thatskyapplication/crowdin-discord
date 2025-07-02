@@ -4,13 +4,7 @@ import {
 	SeparatorSpacingSize,
 } from "@discordjs/core/http-only";
 import { CrowdinEventToString, CrowdinLanguageToLanguage } from "../utility/constants.js";
-import type { CrowdinTargetLanguage } from "./shared.js";
-
-interface CrowdinUser {
-	id: string;
-	username: string;
-	fullName: string;
-}
+import type { CrowdinTargetLanguage, CrowdinUser } from "./shared.js";
 
 interface CrowdinString {
 	id: string;

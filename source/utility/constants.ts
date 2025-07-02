@@ -15,6 +15,7 @@ export const CrowdinLanguageToLanguage = {
 } as const satisfies Readonly<Record<string, string>>;
 
 export const CrowdinEventToString = {
+	"file.updated": "File updated",
 	"project.translated": "Project fully translated",
 	"project.approved": "Project fully approved",
 	"project.built": "Project built",
