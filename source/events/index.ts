@@ -1,3 +1,4 @@
-import type { CrowdinSuggestionAdded } from "./suggestion.js";
+import type { CrowdinProjectEvent } from "./project.js";
+import type { CrowdinSuggestionEvent } from "./suggestion.js";
 
-export type Events = CrowdinSuggestionAdded;
+export type Events = CrowdinProjectEvent | CrowdinSuggestionEvent;

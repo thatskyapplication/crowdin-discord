@@ -1,12 +1,15 @@
+import {
+	type APIMessageTopLevelComponent,
+	ComponentType,
+	SeparatorSpacingSize,
+} from "@discordjs/core/http-only";
+import { CrowdinEventToString, CrowdinLanguageToLanguage } from "../utility/constants.js";
+import type { CrowdinTargetLanguage } from "./shared.js";
+
 interface CrowdinUser {
 	id: string;
 	username: string;
 	fullName: string;
-}
-
-interface CrowdinTargetLanguage {
-	id: string;
-	name: string;
 }
 
 interface CrowdinString {
@@ -33,7 +36,7 @@ interface CrowdinTranslation {
 	string: CrowdinString;
 }
 
-export interface CrowdinSuggestionAdded {
+export interface CrowdinSuggestionEvent {
 	event:
 		| "suggestion.added"
 		| "suggestion.updated"
@@ -41,4 +44,37 @@ export interface CrowdinSuggestionAdded {
 		| "suggestion.approved"
 		| "suggestion.disapproved";
 	translation: CrowdinTranslation;
+}
+
+export function createSuggestionComponents(
+	data: CrowdinSuggestionEvent,
+): APIMessageTopLevelComponent[] {
+	return [
+		{
+			type: ComponentType.Container,
+			components: [
+				{
+					type: ComponentType.TextDisplay,
+					content: `[${CrowdinEventToString[data.event]}](${data.translation.string.url}) (\`${data.translation.string.key}\`)`,
+				},
+				{
+					type: ComponentType.TextDisplay,
+					content: `Original:\n>>> ${data.translation.string.text}`,
+				},
+				{
+					type: ComponentType.TextDisplay,
+					content: `Suggested:\n>>> ${data.translation.text}`,
+				},
+				{
+					type: ComponentType.Separator,
+					divider: true,
+					spacing: SeparatorSpacingSize.Small,
+				},
+				{
+					type: ComponentType.TextDisplay,
+					content: `-# ${CrowdinLanguageToLanguage[data.translation.targetLanguage.name as keyof typeof CrowdinLanguageToLanguage]} | ${data.translation.user.username} | <t:${Math.floor(Date.parse(data.translation.createdAt) / 1000)}:R>`,
+				},
+			],
+		},
+	];
 }

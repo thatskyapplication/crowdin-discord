@@ -1,7 +1,8 @@
-import { API, ComponentType, MessageFlags, SeparatorSpacingSize } from "@discordjs/core/http-only";
+import { API, type APIMessageTopLevelComponent, MessageFlags } from "@discordjs/core/http-only";
 import { REST } from "@discordjs/rest";
 import type { Events } from "./events/index.js";
-import { CrowdinEventToString, CrowdinLanguageToLanguage } from "./utility/constants.js";
+import { createProjectComponents } from "./events/project.js";
+import { createSuggestionComponents } from "./events/suggestion.js";
 
 interface Env {
 	CROWDIN_TOKEN: string;
@@ -22,37 +23,25 @@ export default {
 		}
 
 		const data = (await request.json()) as Events;
+		let components: APIMessageTopLevelComponent[];
+
+		switch (data.event) {
+			case "project.translated":
+			case "project.approved":
+				components = createProjectComponents(data);
+				break;
+			case "suggestion.added":
+			case "suggestion.updated":
+			case "suggestion.deleted":
+			case "suggestion.approved":
+			case "suggestion.disapproved":
+				components = createSuggestionComponents(data);
+				break;
+		}
 
 		await new API(new REST()).webhooks.execute(env.WEBHOOK_ID, env.WEBHOOK_TOKEN, {
 			allowed_mentions: { parse: [] },
-			components: [
-				{
-					type: ComponentType.Container,
-					components: [
-						{
-							type: ComponentType.TextDisplay,
-							content: `[${CrowdinEventToString[data.event]}](${data.translation.string.url}) (\`${data.translation.string.key}\`)`,
-						},
-						{
-							type: ComponentType.TextDisplay,
-							content: `Original:\n>>> ${data.translation.string.text}`,
-						},
-						{
-							type: ComponentType.TextDisplay,
-							content: `Suggested:\n>>> ${data.translation.text}`,
-						},
-						{
-							type: ComponentType.Separator,
-							divider: true,
-							spacing: SeparatorSpacingSize.Small,
-						},
-						{
-							type: ComponentType.TextDisplay,
-							content: `-# ${CrowdinLanguageToLanguage[data.translation.targetLanguage.name as keyof typeof CrowdinLanguageToLanguage]} | ${data.translation.user.username} | <t:${Math.floor(Date.parse(data.translation.createdAt) / 1000)}:R>`,
-						},
-					],
-				},
-			],
+			components,
 			flags: MessageFlags.IsComponentsV2,
 			with_components: true,
 		});
