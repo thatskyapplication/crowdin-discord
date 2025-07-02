@@ -17,6 +17,7 @@ export const CrowdinLanguageToLanguage = {
 export const CrowdinEventToString = {
 	"project.translated": "Project fully translated",
 	"project.approved": "Project fully approved",
+	"project.built": "Project built",
 	"suggestion.added": "Suggestion added",
 	"suggestion.updated": "Suggestion updated",
 	"suggestion.deleted": "Suggestion deleted",

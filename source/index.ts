@@ -1,7 +1,10 @@
 import { API, type APIMessageTopLevelComponent, MessageFlags } from "@discordjs/core/http-only";
 import { REST } from "@discordjs/rest";
 import type { Events } from "./events/index.js";
-import { createProjectComponents } from "./events/project.js";
+import {
+	createProjectBuiltComponents,
+	createProjectTranslatedAndApprovedComponents,
+} from "./events/project.js";
 import { createSuggestionComponents } from "./events/suggestion.js";
 
 interface Env {
@@ -28,7 +31,10 @@ export default {
 		switch (data.event) {
 			case "project.translated":
 			case "project.approved":
-				components = createProjectComponents(data);
+				components = createProjectTranslatedAndApprovedComponents(data);
+				break;
+			case "project.built":
+				components = createProjectBuiltComponents(data);
 				break;
 			case "suggestion.added":
 			case "suggestion.updated":
