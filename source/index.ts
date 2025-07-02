@@ -17,13 +17,13 @@ interface Env {
 export default {
 	async fetch(request, env) {
 		if (request.method !== "POST") {
-			return new Response("Method not allowed.", { status: 405 });
+			return new Response(null, { status: 405 });
 		}
 
 		const authorisation = request.headers.get("Authorization");
 
 		if (authorisation !== env.CROWDIN_TOKEN) {
-			return new Response("Unauthorized", { status: 401 });
+			return new Response(null, { status: 401 });
 		}
 
 		const data = (await request.json()) as Events;
