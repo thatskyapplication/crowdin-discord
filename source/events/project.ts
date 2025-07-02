@@ -20,7 +20,8 @@ interface CrowdinProjectTranslatedAndApproved {
 }
 
 interface CrowdinProjectBuild {
-	downloadLink: string;
+	// "downloadLink" is used on https://support.crowdin.com/developer/webhooks/#project-successfully-built, but it is actually "downloadUrl".
+	downloadUrl: string;
 	project: CrowdinProject;
 }
 
@@ -68,7 +69,7 @@ export function createProjectBuiltComponents(
 					accessory: {
 						type: ComponentType.Button,
 						style: ButtonStyle.Link,
-						url: data.build.downloadLink,
+						url: data.build.downloadUrl,
 						label: "Download",
 					},
 					components: [
