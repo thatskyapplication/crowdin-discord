@@ -91,7 +91,7 @@ export async function createProjectBuiltComponents(
 					components: [
 						{
 							type: ComponentType.TextDisplay,
-							content: `[${CrowdinEventToString[data.event]}](${data.build.project.url})`,
+							content: `[${CrowdinEventToString[data.event]}](${data.build.project.url}) (expires <t:${Math.floor(Date.parse(download.expireIn) / 1000)}:R>)`,
 						},
 					],
 				},
