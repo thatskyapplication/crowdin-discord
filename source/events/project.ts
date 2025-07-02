@@ -25,7 +25,7 @@ export function createProjectComponents(data: CrowdinProjectEvent): APIMessageTo
 			components: [
 				{
 					type: ComponentType.TextDisplay,
-					content: `[${CrowdinEventToString[data.event]}](${data.project.url}) into ${CrowdinLanguageToLanguage[data.targetLanguage.name as keyof typeof CrowdinLanguageToLanguage]}`,
+					content: `[${CrowdinEventToString[data.event]}](${data.project.url}) into ${CrowdinLanguageToLanguage[data.targetLanguage.name as keyof typeof CrowdinLanguageToLanguage]}!`,
 				},
 				{
 					type: ComponentType.Separator,
