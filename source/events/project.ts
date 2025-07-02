@@ -30,6 +30,15 @@ interface CrowdinProjectBuilt {
 	build: CrowdinProjectBuild;
 }
 
+interface CrowdinProjectBuiltDownloadData {
+	url: string;
+	expireIn: string;
+}
+
+interface CrowdinProjectBuildDownload {
+	data: CrowdinProjectBuiltDownloadData;
+}
+
 export type CrowdinProjectEvent = CrowdinProjectTranslatedAndApproved | CrowdinProjectBuilt;
 
 export function createProjectTranslatedAndApprovedComponents(
@@ -57,9 +66,16 @@ export function createProjectTranslatedAndApprovedComponents(
 	];
 }
 
-export function createProjectBuiltComponents(
+export async function createProjectBuiltComponents(
 	data: CrowdinProjectBuilt,
-): APIMessageTopLevelComponent[] {
+	token: string,
+): Promise<APIMessageTopLevelComponent[]> {
+	const downloadData = await fetch(data.build.downloadUrl, {
+		headers: { Authorization: `Bearer ${token}` },
+	});
+
+	const { data: download } = (await downloadData.json()) as CrowdinProjectBuildDownload;
+
 	return [
 		{
 			type: ComponentType.Container,
@@ -69,7 +85,7 @@ export function createProjectBuiltComponents(
 					accessory: {
 						type: ComponentType.Button,
 						style: ButtonStyle.Link,
-						url: data.build.downloadUrl,
+						url: download.url,
 						label: "Download",
 					},
 					components: [

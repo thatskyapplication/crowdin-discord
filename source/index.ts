@@ -9,6 +9,7 @@ import { createSuggestionComponents } from "./events/suggestion.js";
 
 interface Env {
 	CROWDIN_TOKEN: string;
+	CROWDIN_WEBHOOK_TOKEN: string;
 	WEBHOOK_ID: string;
 	WEBHOOK_TOKEN: string;
 }
@@ -34,7 +35,7 @@ export default {
 				components = createProjectTranslatedAndApprovedComponents(data);
 				break;
 			case "project.built":
-				components = createProjectBuiltComponents(data);
+				components = await createProjectBuiltComponents(data, env.CROWDIN_WEBHOOK_TOKEN);
 				break;
 			case "suggestion.added":
 			case "suggestion.updated":
