@@ -71,7 +71,7 @@ export async function createFileUpdatedComponents(
 				},
 				{
 					type: ComponentType.TextDisplay,
-					content: `New strings: ${addedStrings} (${addedWords})\nDeleted strings: ${deletedStrings} (${deletedWords})\nUpdated strings: ${updatedStrings} (${updatedWords})`,
+					content: `File: ${data.file.name}\nNew strings: ${addedStrings} (${addedWords})\nDeleted strings: ${deletedStrings} (${deletedWords})\nUpdated strings: ${updatedStrings} (${updatedWords})\nRevision: ${data.file.revision}`,
 				},
 				{
 					type: ComponentType.Separator,
