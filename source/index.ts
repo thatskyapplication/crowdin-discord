@@ -31,6 +31,8 @@ export default {
 		let components: APIMessageTopLevelComponent[];
 
 		switch (data.event) {
+			case "file.translated":
+			case "file.approved":
 			case "file.added":
 			case "file.updated":
 			case "file.reverted":

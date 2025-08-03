@@ -1,12 +1,19 @@
 import {
+	type APIComponentInContainer,
 	type APIMessageTopLevelComponent,
 	ComponentType,
 	SeparatorSpacingSize,
 } from "@discordjs/core/http-only";
 import { CrowdinEventToString } from "../utility/constants.js";
-import type { CrowdinFileWithProject, CrowdinUser } from "./shared.js";
+import type { CrowdinFileWithProject, CrowdinTargetLanguage, CrowdinUser } from "./shared.js";
 
-export interface CrowdinFileEvent {
+interface CrowdinFileFullyTranslatedAndFullyReviewedEvent {
+	event: "file.translated" | "file.approved";
+	file: CrowdinFileWithProject;
+	targetLanguage: CrowdinTargetLanguage;
+}
+
+interface CrowdinFileModifiedEvent {
 	event: "file.added" | "file.updated" | "file.reverted" | "file.deleted";
 	file: CrowdinFileWithProject;
 	user: CrowdinUser;
@@ -32,6 +39,10 @@ interface CrowdinFileRevision {
 	data: CrowdinFileRevisionData;
 }
 
+export type CrowdinFileEvent =
+	| CrowdinFileFullyTranslatedAndFullyReviewedEvent
+	| CrowdinFileModifiedEvent;
+
 export async function createFileComponents(
 	data: CrowdinFileEvent,
 	token: string,
@@ -52,28 +63,41 @@ export async function createFileComponents(
 	const updatedStrings = info.updated.strings;
 	const updatedWords = info.updated.words === 1 ? "1 word" : `${info.updated.words} words`;
 
-	return [
+	const containerComponents: APIComponentInContainer[] = [
 		{
-			type: ComponentType.Container,
-			components: [
-				{
-					type: ComponentType.TextDisplay,
-					content: `[${CrowdinEventToString[data.event]}](${data.file.project.url})`,
-				},
-				{
-					type: ComponentType.TextDisplay,
-					content: `File: ${data.file.name}\nNew strings: ${addedStrings} (${addedWords})\nDeleted strings: ${deletedStrings} (${deletedWords})\nUpdated strings: ${updatedStrings} (${updatedWords})\nRevision: ${data.file.revision}`,
-				},
-				{
-					type: ComponentType.Separator,
-					divider: true,
-					spacing: SeparatorSpacingSize.Small,
-				},
-				{
-					type: ComponentType.TextDisplay,
-					content: `-# ${data.user.username} | <t:${Math.floor(Date.parse(revision.data.date) / 1000)}:R>`,
-				},
-			],
+			type: ComponentType.TextDisplay,
+			content: `[${CrowdinEventToString[data.event]}](${data.file.project.url})`,
 		},
 	];
+
+	if (
+		data.event === "file.added" ||
+		data.event === "file.updated" ||
+		data.event === "file.reverted" ||
+		data.event === "file.deleted"
+	) {
+		containerComponents.push({
+			type: ComponentType.TextDisplay,
+			content: `File: ${data.file.name}\nNew strings: ${addedStrings} (${addedWords})\nDeleted strings: ${deletedStrings} (${deletedWords})\nUpdated strings: ${updatedStrings} (${updatedWords})\nRevision: ${data.file.revision}`,
+		});
+	}
+
+	const relativeTimeMarkdown = `<t:${Math.floor(Date.parse(revision.data.date) / 1000)}:R>`;
+
+	containerComponents.push(
+		{
+			type: ComponentType.Separator,
+			divider: true,
+			spacing: SeparatorSpacingSize.Small,
+		},
+		{
+			type: ComponentType.TextDisplay,
+			content:
+				"user" in data
+					? `-# ${data.user.username} | ${relativeTimeMarkdown}`
+					: `${relativeTimeMarkdown}`,
+		},
+	);
+
+	return [{ type: ComponentType.Container, components: containerComponents }];
 }
