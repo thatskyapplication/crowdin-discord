@@ -15,7 +15,7 @@
 		"@discordjs/rest": "^2.5.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.0.6",
+		"@biomejs/biome": "^2.1.3",
 		"@cloudflare/workers-types": "^4.20250701.0",
 		"typescript": "^5.8.3",
 		"wrangler": "^4.22.0"
