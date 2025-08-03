@@ -18,6 +18,7 @@ export const CrowdinEventToString = {
 	"file.added": "File added",
 	"file.updated": "File updated",
 	"file.reverted": "File reverted",
+	"file.deleted": "File deleted",
 	"project.translated": "Project fully translated",
 	"project.approved": "Project fully approved",
 	"project.built": "Project built",

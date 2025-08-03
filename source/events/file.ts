@@ -7,7 +7,7 @@ import { CrowdinEventToString } from "../utility/constants.js";
 import type { CrowdinFileWithProject, CrowdinUser } from "./shared.js";
 
 export interface CrowdinFileEvent {
-	event: "file.added" | "file.updated" | "file.reverted";
+	event: "file.added" | "file.updated" | "file.reverted" | "file.deleted";
 	file: CrowdinFileWithProject;
 	user: CrowdinUser;
 }

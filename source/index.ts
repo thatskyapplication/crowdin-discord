@@ -34,6 +34,7 @@ export default {
 			case "file.added":
 			case "file.updated":
 			case "file.reverted":
+			case "file.deleted":
 				components = await createFileComponents(data, env.CROWDIN_WEBHOOK_TOKEN);
 				break;
 			case "project.translated":
