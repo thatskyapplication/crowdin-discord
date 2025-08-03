@@ -7,7 +7,7 @@ import { CrowdinEventToString } from "../utility/constants.js";
 import type { CrowdinFileWithProject, CrowdinUser } from "./shared.js";
 
 export interface CrowdinFileEvent {
-	event: "file.added" | "file.updated";
+	event: "file.added" | "file.updated" | "file.reverted";
 	file: CrowdinFileWithProject;
 	user: CrowdinUser;
 }
@@ -32,7 +32,7 @@ interface CrowdinFileRevision {
 	data: CrowdinFileRevisionData;
 }
 
-export async function createFileAddedAndUpdatedComponents(
+export async function createFileComponents(
 	data: CrowdinFileEvent,
 	token: string,
 ): Promise<APIMessageTopLevelComponent[]> {

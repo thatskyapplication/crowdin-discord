@@ -1,6 +1,6 @@
 import { API, type APIMessageTopLevelComponent, MessageFlags } from "@discordjs/core/http-only";
 import { REST } from "@discordjs/rest";
-import { createFileAddedAndUpdatedComponents } from "./events/file.js";
+import { createFileComponents } from "./events/file.js";
 import type { Events } from "./events/index.js";
 import {
 	createProjectBuiltComponents,
@@ -33,7 +33,8 @@ export default {
 		switch (data.event) {
 			case "file.added":
 			case "file.updated":
-				components = await createFileAddedAndUpdatedComponents(data, env.CROWDIN_WEBHOOK_TOKEN);
+			case "file.reverted":
+				components = await createFileComponents(data, env.CROWDIN_WEBHOOK_TOKEN);
 				break;
 			case "project.translated":
 			case "project.approved":
