@@ -14,7 +14,6 @@ interface CrowdinProjectTranslatedAndApproved {
 }
 
 interface CrowdinProjectBuild {
-	// "downloadLink" is used on https://support.crowdin.com/developer/webhooks/#project-successfully-built, but it is actually "downloadUrl".
 	downloadUrl: string;
 	project: CrowdinProject;
 }
