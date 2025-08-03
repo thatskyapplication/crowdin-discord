@@ -14,3 +14,15 @@ export interface CrowdinUser {
 	username: string;
 	fullName: string;
 }
+
+export interface CrowdinFile {
+	id: string;
+	name: string;
+	title: string;
+	type: string;
+	revision: string;
+}
+
+export interface CrowdinFileWithProject extends CrowdinFile {
+	project: CrowdinProject;
+}

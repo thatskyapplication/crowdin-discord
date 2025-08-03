@@ -4,20 +4,11 @@ import {
 	SeparatorSpacingSize,
 } from "@discordjs/core/http-only";
 import { CrowdinEventToString } from "../utility/constants.js";
-import type { CrowdinProject, CrowdinUser } from "./shared.js";
-
-interface CrowdinFile {
-	id: string;
-	name: string;
-	title: string;
-	type: string;
-	revision: string;
-	project: CrowdinProject;
-}
+import type { CrowdinFileWithProject, CrowdinUser } from "./shared.js";
 
 export interface CrowdinFileUpdated {
 	event: "file.updated";
-	file: CrowdinFile;
+	file: CrowdinFileWithProject;
 	user: CrowdinUser;
 }
 

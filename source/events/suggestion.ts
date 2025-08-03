@@ -4,7 +4,7 @@ import {
 	SeparatorSpacingSize,
 } from "@discordjs/core/http-only";
 import { CrowdinEventToString, CrowdinLanguageToLanguage } from "../utility/constants.js";
-import type { CrowdinTargetLanguage, CrowdinUser } from "./shared.js";
+import type { CrowdinFile, CrowdinTargetLanguage, CrowdinUser } from "./shared.js";
 
 interface CrowdinString {
 	id: string;
@@ -18,6 +18,7 @@ interface CrowdinString {
 	url: string;
 	createdAt: string;
 	updatedAt: string;
+	file: CrowdinFile;
 }
 
 interface CrowdinTranslation {
@@ -49,7 +50,7 @@ export function createSuggestionComponents(
 			components: [
 				{
 					type: ComponentType.TextDisplay,
-					content: `[${CrowdinEventToString[data.event]}](${data.translation.string.url}) (\`${data.translation.string.key}\`)`,
+					content: `[${CrowdinEventToString[data.event]}](${data.translation.string.url}) (\`${data.translation.string.key}\`) in ${data.translation.string.file.name}`,
 				},
 				{
 					type: ComponentType.TextDisplay,
