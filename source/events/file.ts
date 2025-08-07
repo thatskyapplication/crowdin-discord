@@ -4,7 +4,7 @@ import {
 	ComponentType,
 	SeparatorSpacingSize,
 } from "@discordjs/core/http-only";
-import { CrowdinEventToString } from "../utility/constants.js";
+import { CrowdinEventToString, CrowdinLanguageToLanguage } from "../utility/constants.js";
 import type { CrowdinFileWithProject, CrowdinTargetLanguage, CrowdinUser } from "./shared.js";
 
 interface CrowdinFileFullyTranslatedAndFullyReviewedEvent {
@@ -62,13 +62,7 @@ export async function createFileComponents(
 	const deletedWords = info.deleted.words === 1 ? "1 word" : `${info.deleted.words} words`;
 	const updatedStrings = info.updated.strings;
 	const updatedWords = info.updated.words === 1 ? "1 word" : `${info.updated.words} words`;
-
-	const containerComponents: APIComponentInContainer[] = [
-		{
-			type: ComponentType.TextDisplay,
-			content: `[${CrowdinEventToString[data.event]}](${data.file.project.url})`,
-		},
-	];
+	const containerComponents: APIComponentInContainer[] = [];
 
 	if (
 		data.event === "file.added" ||
@@ -76,9 +70,22 @@ export async function createFileComponents(
 		data.event === "file.reverted" ||
 		data.event === "file.deleted"
 	) {
+		containerComponents.push(
+			{
+				type: ComponentType.TextDisplay,
+				content: `[${CrowdinEventToString[data.event]}](${data.file.project.url})`,
+			},
+			{
+				type: ComponentType.TextDisplay,
+				content: `File: ${data.file.name}\nNew strings: ${addedStrings} (${addedWords})\nDeleted strings: ${deletedStrings} (${deletedWords})\nUpdated strings: ${updatedStrings} (${updatedWords})\nRevision: ${data.file.revision}`,
+			},
+		);
+	}
+
+	if (data.event === "file.translated" || data.event === "file.approved") {
 		containerComponents.push({
 			type: ComponentType.TextDisplay,
-			content: `File: ${data.file.name}\nNew strings: ${addedStrings} (${addedWords})\nDeleted strings: ${deletedStrings} (${deletedWords})\nUpdated strings: ${updatedStrings} (${updatedWords})\nRevision: ${data.file.revision}`,
+			content: `[${CrowdinEventToString[data.event]}](${data.file.project.url}) (${data.file.name}) into ${CrowdinLanguageToLanguage[data.targetLanguage.name as keyof typeof CrowdinLanguageToLanguage]}!`,
 		});
 	}
 
