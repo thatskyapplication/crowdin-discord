@@ -4,7 +4,11 @@ import {
 	ComponentType,
 	SeparatorSpacingSize,
 } from "@discordjs/core/http-only";
-import { CrowdinEventToString, CrowdinLanguageToLanguage } from "../utility/constants.js";
+import {
+	CrowdinEventToAccentColour,
+	CrowdinEventToString,
+	CrowdinLanguageToLanguage,
+} from "../utility/constants.js";
 import type { CrowdinFileWithProject, CrowdinTargetLanguage, CrowdinUser } from "./shared.js";
 
 interface CrowdinFileFullyTranslatedAndFullyReviewedEvent {
@@ -106,5 +110,11 @@ export async function createFileComponents(
 		},
 	);
 
-	return [{ type: ComponentType.Container, components: containerComponents }];
+	return [
+		{
+			type: ComponentType.Container,
+			components: containerComponents,
+			accent_color: CrowdinEventToAccentColour[data.event],
+		},
+	];
 }

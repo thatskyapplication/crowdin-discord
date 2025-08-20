@@ -4,7 +4,11 @@ import {
 	ComponentType,
 	SeparatorSpacingSize,
 } from "@discordjs/core/http-only";
-import { CrowdinEventToString, CrowdinLanguageToLanguage } from "../utility/constants.js";
+import {
+	CrowdinEventToAccentColour,
+	CrowdinEventToString,
+	CrowdinLanguageToLanguage,
+} from "../utility/constants.js";
 import type { CrowdinProject, CrowdinTargetLanguage } from "./shared.js";
 
 interface CrowdinProjectTranslatedAndApproved {
@@ -55,6 +59,7 @@ export function createProjectTranslatedAndApprovedComponents(
 					content: `-# <t:${Math.floor(Date.parse(data.project.lastActivity) / 1000)}:R>`,
 				},
 			],
+			accent_color: CrowdinEventToAccentColour[data.event],
 		},
 	];
 }
@@ -98,6 +103,7 @@ export async function createProjectBuiltComponents(
 					content: `-# <t:${Math.floor(Date.parse(data.build.project.lastActivity) / 1000)}:R>`,
 				},
 			],
+			accent_color: CrowdinEventToAccentColour[data.event],
 		},
 	];
 }

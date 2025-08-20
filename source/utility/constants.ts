@@ -1,3 +1,5 @@
+import type { Events } from "../events/index.js";
+
 export const CrowdinLanguageToLanguage = {
 	"Chinese Simplified": "中文",
 	"Chinese Traditional": "繁體中文",
@@ -29,4 +31,21 @@ export const CrowdinEventToString = {
 	"suggestion.deleted": "Suggestion deleted",
 	"suggestion.approved": "Suggestion approved",
 	"suggestion.disapproved": "Suggestion disapproved",
-} as const satisfies Readonly<Record<string, string>>;
+} as const satisfies Readonly<Record<Events["event"], string>>;
+
+export const CrowdinEventToAccentColour = {
+	"file.translated": 0x33be2a,
+	"file.approved": 0x33be2a,
+	"file.added": 0x299bd8,
+	"file.updated": 0xdbb536,
+	"file.reverted": 0x954ecf,
+	"file.deleted": 0xe63437,
+	"project.translated": 0x33be2a,
+	"project.approved": 0x33be2a,
+	"project.built": 0x3bc8e4,
+	"suggestion.added": 0xbd9a75,
+	"suggestion.updated": 0xd4b45a,
+	"suggestion.deleted": 0xe63437,
+	"suggestion.approved": 0xf04ad1,
+	"suggestion.disapproved": 0xc79fe4,
+} as const satisfies Readonly<Record<Events["event"], number>>;

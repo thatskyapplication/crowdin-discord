@@ -3,7 +3,11 @@ import {
 	ComponentType,
 	SeparatorSpacingSize,
 } from "@discordjs/core/http-only";
-import { CrowdinEventToString, CrowdinLanguageToLanguage } from "../utility/constants.js";
+import {
+	CrowdinEventToAccentColour,
+	CrowdinEventToString,
+	CrowdinLanguageToLanguage,
+} from "../utility/constants.js";
 import type { CrowdinFile, CrowdinTargetLanguage, CrowdinUser } from "./shared.js";
 
 interface CrowdinString {
@@ -70,6 +74,7 @@ export function createSuggestionComponents(
 					content: `-# ${CrowdinLanguageToLanguage[data.translation.targetLanguage.name as keyof typeof CrowdinLanguageToLanguage]} | ${data.translation.user.username} | <t:${Math.floor(Date.parse(data.translation.createdAt) / 1000)}:R>`,
 				},
 			],
+			accent_color: CrowdinEventToAccentColour[data.event],
 		},
 	];
 }
