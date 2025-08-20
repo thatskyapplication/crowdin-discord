@@ -43,7 +43,7 @@ export const CrowdinEventToAccentColour = {
 	"project.translated": 0x33be2a,
 	"project.approved": 0x33be2a,
 	"project.built": 0x3bc8e4,
-	"suggestion.added": 0xbd9a75,
+	"suggestion.added": 0x5b89c6,
 	"suggestion.updated": 0xd4b45a,
 	"suggestion.deleted": 0xe63437,
 	"suggestion.approved": 0xf04ad1,
