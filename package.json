@@ -1,5 +1,5 @@
 {
-	"name": "@thatskyapplication/crowdin",
+	"name": "@thatskyapplication/crowdin-discord",
 	"type": "module",
 	"private": true,
 	"scripts": {
