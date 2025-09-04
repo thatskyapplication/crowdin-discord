@@ -1,5 +1,6 @@
 import { API, type APIMessageTopLevelComponent, MessageFlags } from "@discordjs/core/http-only";
 import { REST } from "@discordjs/rest";
+import { withSentry } from "@sentry/cloudflare";
 import { createFileComponents } from "./events/file.js";
 import type { Events } from "./events/index.js";
 import {
@@ -13,9 +14,10 @@ interface Env {
 	CROWDIN_WEBHOOK_TOKEN: string;
 	WEBHOOK_ID: string;
 	WEBHOOK_TOKEN: string;
+	SENTRY_DATA_SOURCE_NAME: string;
 }
 
-export default {
+export default withSentry((env) => ({ dsn: env.SENTRY_DATA_SOURCE_NAME, sendDefaultPii: true }), {
 	async fetch(request, env) {
 		if (request.method !== "POST") {
 			return new Response(null, { status: 405 });
@@ -64,4 +66,4 @@ export default {
 
 		return new Response(null, { status: 204 });
 	},
-} satisfies ExportedHandler<Env>;
+} satisfies ExportedHandler<Env>);
