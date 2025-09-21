@@ -62,7 +62,10 @@ export function createSuggestionComponents(
 				},
 				{
 					type: ComponentType.TextDisplay,
-					content: `Suggested:\n>>> ${data.translation.text}`,
+					content:
+						data.translation.text.length > 0
+							? `Suggested:\n>>> ${data.translation.text}`
+							: "_Empty_",
 				},
 				{
 					type: ComponentType.Separator,
