@@ -8,3 +8,6 @@ routes = [{ pattern = "crowdin-discord.thatskyapplication.com", custom_domain = 
 
 [observability]
 enabled = true
+
+[version_metadata]
+binding = "CF_VERSION_METADATA"
